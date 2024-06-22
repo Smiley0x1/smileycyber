@@ -1,0 +1,21 @@
+:root{
+    --main-color: rgb(70, 70, 70)  ;
+    --seccond-color: rgb(0, 0, 0);
+}
+html{
+    font-size: 62.5%; 
+}
+
+*{
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+
+a{
+    text-decoration: none;
+}
+
+li{
+    list-style: none;
+}
+    

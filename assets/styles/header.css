@@ -1,0 +1,51 @@
+/* Global box-sizing rule */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #666666; /* Corrected the hex color value */
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* Center items vertically */
+  padding: 0.5rem 5.5rem;
+  background-color: rgba(34, 34, 34, 0.14); /* Adjusted background color for clarity */
+}
+
+.header__menu {
+  display: flex;
+  justify-content: center; /* Center items horizontally */
+  flex: 1; /* Take up remaining space in the header */
+}
+
+.header__menu ul {
+  display: flex;
+  justify-content: space-between;
+  list-style-type: none; /* Remove default list style */
+  padding: 0; /* Remove default padding */
+  margin: 0; /* Remove default margin */
+  gap: 25px
+}
+
+.header__menu a {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: inherit; /* Ensure the color is inherited from the parent element */
+  text-decoration: none; /* Remove underline from links */
+  cursor: pointer;
+}
+
+.header__menu li {
+  transition: transform 0.3s ease; /* Added transition for smoother scaling */
+}
+
+.header__menu li:hover {
+  transform: scale(1.2);
+}
