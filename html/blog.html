@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Blogs - Smiley Cyber</title>
+  <link rel="stylesheet" href="../assets/styles/body.css">
+	<link rel="stylesheet" href="../assets/styles/header.css">
+	<link rel="stylesheet" href="../assets/styles/root.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+
+</head>
+<body>
+	<header class="header">
+		<nav class="header__menu">
+			<ul>
+        <li><img src="imgs/cropped-original-logo-symbol.png" width="50" height="50"></li>
+				<li><a class="header__menu-link" href="../index.html">Home</a></li>
+				<li><a class="header__menu-link" href="blog.html">Learning</a></li>
+				<li><a class="header__menu-link" href="about.html">About</a></li>
+				<li><a class="header__menu-link" href="contact.html">Contact</a></li>
+			</ul>
+		</nav>
+</header>
+
+  <br>
+  <main>
+		<section class="intro">
+			<div class="container">
+      </div>
+      <h1>Blog</h1>
+      <p>Below is a collection of research and papers that I have compiled sorted by most recent, you can search based on topics
+      </p>
+      </section>
+    </div><br><br>
+    <div>
+      <select id="tag-selector" class="dropdown">
+        <option value="">All</option>
+        <option value="cybersecurity">Cybersecurity</option>
+        <option value="hardware">Hardware</option>
+        <option value="networking">Networking</option>
+        <option value="encryption">Encryption</option>
+        <option value="other">Other</option>
+      </select>
+<br>
+      <div id="blog-posts">
+        <!-- This is where the blog posts will be dynamically generated -->
+      </div>      
+      
+      <script>
+        const blogPosts = [
+          {
+            name: "Getting a Shell 0x0",
+            description: "Hacking a router",
+            tags: ["cybersecurity", "other","hardware"],
+            link: "blogs/Getting_A_Shell0/Getting_A_Shell.html",
+            date: "05/10/2023"
+          },
+          {
+            name: "First Blog Post",
+            description: "Who I am",
+            tags: ["cybersecurity", "other"],
+            link: "blogs/First_Blog/First_Blog.html",
+            date: "3/16/2023"
+          },
+        ];
+      
+        const blogPostsContainer = document.getElementById("blog-posts");
+      
+        function createBlogPostElement(post) {
+          const postElement = document.createElement("div");
+          postElement.classList.add("blog-post");
+      
+          const nameElement = document.createElement("h2");
+          nameElement.textContent = post.name;
+
+          const dateElement = document.createElement("p");
+          dateElement.textContent = post.date;
+      
+          const descriptionElement = document.createElement("p");
+          descriptionElement.textContent = post.description;
+      
+          const tagsElement = document.createElement("ul");
+          tagsElement.classList.add("tags");
+          post.tags.forEach(tag => {
+            const tagElement = document.createElement("li");
+            tagElement.textContent = tag;
+            tagsElement.appendChild(tagElement);
+          });
+      
+          const linkElement = document.createElement("a");
+          linkElement.href = post.link;
+          linkElement.textContent = "Read More";
+      
+          postElement.appendChild(nameElement);
+          postElement.appendChild(dateElement);
+          postElement.appendChild(descriptionElement);
+          postElement.appendChild(linkElement);
+      
+          return postElement;
+        }
+      
+        function renderBlogPosts() {
+          const selectedTag = document.getElementById("tag-selector").value;
+          blogPostsContainer.innerHTML = "";
+      
+          blogPosts
+            .filter(post => selectedTag === "" || post.tags.includes(selectedTag))
+            .forEach(post => {
+              const postElement = createBlogPostElement(post);
+              blogPostsContainer.appendChild(postElement);
+            });
+        }
+      
+        document.getElementById("tag-selector").addEventListener("change", renderBlogPosts);
+      
+        renderBlogPosts();
+      </script>
+      
+      
+			
+		</section>
+  </main>
+  </body>
+  </html>
