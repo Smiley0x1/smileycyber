@@ -17,6 +17,7 @@
 }
 h1{
     font-size: 2.5rem;
+    text-align: center;
 }
 .texto1{
     font-size: 1.8rem;
@@ -28,3 +29,127 @@ h1{
     line-height: 1.5;
 }
 
+/* Add these styles to blog.css or body.css */
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .intro {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .dropdown {
+    width: 200px;
+    margin: 20px auto;
+    padding: 10px;
+    display: block;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+  }
+  
+  #blog-posts {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  
+  .blog-post {
+    border: 1px solid #000;
+    border-radius: 5px;
+    padding: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: #202020;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  .blog-post:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  }
+  
+  .blog-post h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+  
+  .blog-post p {
+    font-size: 16px;
+    margin-bottom: 10px;
+  }
+  
+  .blog-post .tags {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .blog-post .tags li {
+    background-color: #007BFF;
+    color: #fff;
+    border-radius: 3px;
+    padding: 5px 10px;
+    margin-right: 5px;
+    margin-bottom: 5px;
+    font-size: 14px;
+  }
+  
+  .blog-post a {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 15px;
+    background-color: #007BFF;
+    color: #fff;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.3s;
+  }
+  
+  .blog-post a:hover {
+    background-color: #0056b3;
+  }
+  
+
+
+
+
+
+ /* Add these styles to contact.css */
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .contact {
+    margin-bottom: 20px;
+  }
+  
+  .social-links {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 20px;
+  }
+  
+  .social-links a {
+    display: inline-block;
+  }
+  
+  .social-links img {
+    width: 50px;
+    height: 50px;
+    transition: transform 0.3s;
+  }
+  
+  .social-links img:hover {
+    transform: scale(1.1);
+  }
+  
