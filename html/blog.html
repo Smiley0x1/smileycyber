@@ -70,9 +70,9 @@
                     postElement.classList.add('blog-post');
 
                     postElement.innerHTML = `
-                        <h2><a href="${post.link}" target="_blank">${post.title}</a></h2>
-                        <p3>${post.pubDate}</p3>
-                        <p>${post.description}</p>
+                        <h1><a href="${post.link}" target="_blank">${post.title}</a></h1>
+                        <p3>${post.pubDate}</p3><br><br>
+                        <h2>${post.description}</h2>
                         <a href="${post.link}" target="_blank">Read More</a>
                     `;
 
