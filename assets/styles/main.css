@@ -146,8 +146,8 @@ a:hover {
   }
 }
 .about-img {
-    width: 30%;
-    height: auto;
+    width: 30px;
+    height: 30px;
     max-width: 500px; /* Restrict the maximum size of the image */
     display: block;
     margin: 0 auto; /* Center the image */
