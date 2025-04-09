@@ -1,4 +1,6 @@
-/* General Reset */
+/* ----------------------------
+   Reset & Base Styles
+----------------------------- */
 *,
 *::before,
 *::after {
@@ -17,16 +19,10 @@ body {
   font-family: 'Montserrat', sans-serif;
   line-height: 1.6;
   margin: 0;
-  padding-top: 80px; /* Ensure header doesn't overlap */
+  padding-top: 80px; /* Prevent content from hiding under fixed header */
 }
 
-.container {
-  width: 80%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
+/* Typography */
 h1,
 h2 {
   font-size: 3rem;
@@ -47,7 +43,17 @@ a:hover {
   text-decoration: underline;
 }
 
-/* Header */
+/* Container */
+.container {
+  width: 80%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* ----------------------------
+   Header
+----------------------------- */
 .header {
   background-color: #1c1c1c;
   padding: 15px;
@@ -57,31 +63,63 @@ a:hover {
   left: 0;
   z-index: 100;
 }
-  .header__menu ul {
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    list-style: none;
-    padding: 0;
-    flex-wrap: wrap;
-  }
-  
+
+.header__menu ul {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  list-style: none;
+  padding: 0;
+  flex-wrap: wrap;
+}
 
 .header__menu-link {
   color: #fff;
-  text-decoration: none;
   font-weight: 600;
   font-size: 1.8rem;
   padding: 10px;
   transition: color 0.3s ease;
-  font-family: 'Montserrat', sans-serif; /* Ensure font consistency */
+  font-family: 'Montserrat', sans-serif;
 }
 
 .header__menu-link:hover {
   color: #66b3ff;
 }
 
-/* Blog Section */
+/* ----------------------------
+   Sections
+----------------------------- */
+.HelloWorld,
+.whoami {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.texto1 p,
+.texto p {
+  max-width: 700px;
+  margin: 0 auto;
+  font-size: 1.6rem;
+}
+
+/* ----------------------------
+   About Image
+----------------------------- */
+.about-img {
+  width: 100px;
+  height: auto;
+  max-width: 100px;
+  display: block;
+  margin: 0 auto;
+}
+
+/* ----------------------------
+   Blog Styles
+----------------------------- */
 .blog-wrapper {
   margin-top: 20px;
 }
@@ -118,7 +156,9 @@ a:hover {
   margin-top: 20px;
 }
 
-/* Responsive Design */
+/* ----------------------------
+   Responsive Design
+----------------------------- */
 @media (max-width: 768px) {
   .container {
     width: 90%;
@@ -146,45 +186,16 @@ a:hover {
   .body-content {
     font-size: 1.4rem;
   }
-
 }
-.about-img {
-    width: 30px;
-    height: 30px;
-    max-width: 50px; /* Restrict the maximum size of the image */
-    display: block;
-    margin: 0 auto; /* Center the image */
-  }
-  
-  /* Mobile-first media query for small screens */
-  @media (max-width: 600px) {
-    .about-img {
-      max-width: 50px; /* Make the image smaller on smaller devices */
-    }
-  }
-  
-  /* Tablet and larger screens */
-  @media (min-width: 600px) and (max-width: 768px) {
-    .about-img {
-      max-width: 75px; /* Slightly larger image for tablet-sized screens */
-    }
-  }
 
-  .HelloWorld,
-  .whoami {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 40px 20px;
+@media (max-width: 600px) {
+  .about-img {
+    max-width: 50px;
   }
-  
-  .texto1 p,
-  .texto p {
-    max-width: 700px;
-    margin: 0 auto;
-    font-size: 1.6rem;
-  }
+}
 
-  
+@media (min-width: 600px) and (max-width: 768px) {
+  .about-img {
+    max-width: 75px;
+  }
+}
