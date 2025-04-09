@@ -148,7 +148,7 @@ a:hover {
 .about-img {
     width: 100%;
     height: auto;
-    max-width: 400px; /* Restrict the maximum size of the image */
+    max-width: 100px; /* Restrict the maximum size of the image */
     display: block;
     margin: 0 auto; /* Center the image */
   }
@@ -156,13 +156,13 @@ a:hover {
   /* Mobile-first media query for small screens */
   @media (max-width: 600px) {
     .about-img {
-      max-width: 300px; /* Make the image smaller on smaller devices */
+      max-width: 50px; /* Make the image smaller on smaller devices */
     }
   }
   
   /* Tablet and larger screens */
   @media (min-width: 600px) and (max-width: 768px) {
     .about-img {
-      max-width: 350px; /* Slightly larger image for tablet-sized screens */
+      max-width: 75px; /* Slightly larger image for tablet-sized screens */
     }
   }
