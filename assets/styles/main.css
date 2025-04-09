@@ -145,10 +145,10 @@ a:hover {
     font-size: 1.4rem;
   }
 }
-about-img {
-    width: 50px;
+.about-img {
+    width: 30%;
     height: auto;
-    max-width: 100px; /* Restrict the maximum size of the image */
+    max-width: 500px; /* Restrict the maximum size of the image */
     display: block;
     margin: 0 auto; /* Center the image */
   }
