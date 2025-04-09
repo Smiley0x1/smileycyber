@@ -243,9 +243,22 @@ button:hover {
 }
 
 .column {
-  flex: 50%;
+  float: left;
+  padding: 10px;
+  height: auto;
 }
 
-.row:after{
-  display: 50%;
+.left {
+  width: 50%;
+}
+
+.right {
+  width: 50%;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+
 }
