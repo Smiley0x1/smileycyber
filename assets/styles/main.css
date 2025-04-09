@@ -154,7 +154,7 @@ a:hover {
 ----------------------------- */
 @media (max-width: 768px) {
   .container {
-    width: 30%;
+    width: 50%;
   }
 
   .header__menu ul {
@@ -183,13 +183,13 @@ a:hover {
 
 @media (max-width: 600px) {
   .about-img {
-    max-width: 50px;
+    max-width: 100px;
   }
 }
 
 @media (min-width: 600px) and (max-width: 768px) {
   .about-img {
-    max-width: 75px;
+    max-width: 100px;
   }
 }
 
