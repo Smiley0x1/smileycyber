@@ -87,80 +87,66 @@ a:hover {
 }
 
 /* ----------------------------
-   Contact Page Layout
+   Sections
 ----------------------------- */
-.contact {
-  display: flex;
-  justify-content: space-between; /* Creates the two-column layout */
-  flex-wrap: wrap;
-  gap: 20px; /* Adds space between the columns */
-  padding: 40px 0;
-}
-
-.social-links,
-form {
-  flex: 1;
-  padding: 20px;
-  background-color: #1c1c1c;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.social-links {
+.HelloWorld,
+.whoami {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-}
-
-.social-links a {
-  display: flex;
   align-items: center;
-  margin-bottom: 10px;
-  font-size: 1.6rem;
-  color: #e0e0e0;
+  justify-content: center;
+  text-align: center;
+  padding: 40px 20px;
 }
 
-.social-links img {
-  margin-right: 10px;
-  width: 30px;
-  height: 30px;
-}
-
-form {
-  max-width: 600px;
+.texto1 p,
+.texto p {
+  max-width: 700px;
   margin: 0 auto;
-  text-align: left;
-}
-
-form label {
   font-size: 1.6rem;
 }
 
-input[type="email"],
-textarea,
-input[type="file"] {
-  padding: 10px;
-  border-radius: 5px;
-  border: none;
-  font-size: 1.6rem;
+/* ----------------------------
+   About Image
+----------------------------- */
+.about-img {
+  display: block;
+  max-width: 600px; /* smaller image */
   width: 100%;
+  height: auto;
+  margin: 0 auto;
+  border-radius: 10px; /* optional: looks cleaner */
 }
 
-button {
-  padding: 10px;
-  background-color: #66b3ff;
-  color: #121212;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 1.6rem;
-  transition: background-color 0.3s ease;
-  width: 100%;
+/* ----------------------------
+   Blog Styles
+----------------------------- */
+.blog-wrapper {
+  text-align: center;       /* Center-align the header and content */
+  padding: 40px 0;          /* Adds space around the blog section */
 }
 
-button:hover {
-  background-color: #3399ff;
+/* Blog Post Styling */
+.blog-post {
+  margin-bottom: 20px;      /* Adds spacing between blog posts */
+  padding: 20px;            /* Adds padding inside each blog post */
+  border: 1px solid #ddd;   /* Light border around each post */
+  border-radius: 8px;       /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds subtle shadow */
+}
+
+.blog-post h2 {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+
+.blog-post a {
+  color: #007BFF;
+  text-decoration: none;
+}
+
+.blog-post a:hover {
+  text-decoration: underline;
 }
 
 /* ----------------------------
@@ -168,7 +154,7 @@ button:hover {
 ----------------------------- */
 @media (max-width: 768px) {
   .container {
-    width: 90%;
+    width: 50%;
   }
 
   .header__menu ul {
@@ -185,18 +171,73 @@ button:hover {
     font-size: 2.5rem;
   }
 
-  .contact {
-    flex-direction: column;
+  .meta-info,
+  .tags {
+    font-size: 1.4rem;
   }
 
-  .social-links,
-  form {
-    flex: 1 1 100%;
+  .body-content {
+    font-size: 1.4rem;
   }
 }
 
 @media (max-width: 600px) {
-  .social-links a {
-    font-size: 1.4rem;
+  .about-img {
+    max-width: 100px;
   }
+}
+
+@media (min-width: 600px) and (max-width: 768px) {
+  .about-img {
+    max-width: 100px;
+  }
+}
+
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 500px;
+  margin: 20px auto;
+  text-align: left;
+}
+
+input[type="email"],
+textarea,
+input[type="file"] {
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  font-size: 1.6rem;
+}
+
+button {
+  padding: 10px;
+  background-color: #66b3ff;
+  color: #121212;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 1.6rem;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #3399ff;
+}
+
+.intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.about-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
