@@ -146,7 +146,7 @@ a:hover {
   }
 }
 .about-img {
-    width: 50%;
+    width: 100px;
     height: auto;
     max-width: 100px; /* Restrict the maximum size of the image */
     display: block;
