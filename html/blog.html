@@ -31,52 +31,50 @@
 
     <script>// Function to fetch and display the Substack RSS feed
       async function fetchSubstackPosts() {
-          const rssUrl = 'https://cors-anywhere.herokuapp.com/https://logansmylie.substack.com/feed'; // Using CORS proxy
-          try {
-              const response = await fetch(rssUrl);
-              const data = await response.text();
-              
-              // Log the raw RSS feed to check if we are getting the data
-              console.log(data);
-      
-              // Parse the RSS feed (using DOMParser)
-              const parser = new DOMParser();
-              const xmlDoc = parser.parseFromString(data, 'application/xml');
-              const items = xmlDoc.getElementsByTagName('item');
-      
-              // Log the number of posts to ensure we're getting data
-              console.log(`Found ${items.length} posts.`);
-      
-              // Get the container for blog posts
-              const blogContainer = document.getElementById('blog-posts');
-              blogContainer.innerHTML = ''; // Clear any existing content
-      
-              // Loop through the RSS items and display them
-              Array.from(items).forEach(item => {
-                  const title = item.querySelector('title').textContent;
-                  const link = item.querySelector('link').textContent;
-                  const description = item.querySelector('description').textContent;
-      
-                  // Create the post element
-                  const postElement = document.createElement('div');
-                  postElement.classList.add('blog-post');
-                  
-                  postElement.innerHTML = `
-                      <h2><a href="${link}" target="_blank">${title}</a></h2>
-                      <p>${description}</p>
-                      <a href="${link}" target="_blank">Read More</a>
-                  `;
-                  
-                  // Append to the container
-                  blogContainer.appendChild(postElement);
-              });
-          } catch (error) {
-              console.error('Error fetching or parsing the RSS feed:', error);
-          }
-      }
-      
-      // Call the function to load posts when the page loads
-      window.onload = fetchSubstackPosts;
+    const rssUrl = 'https://api.allorigins.win/get?url=' + encodeURIComponent('https://logansmylie.substack.com/feed');
+    try {
+        const response = await fetch(rssUrl);
+        const data = await response.json(); // AllOrigins returns the data in a JSON object
+        const xmlData = data.contents; // Access the raw XML content
+
+        // Parse the RSS feed (using DOMParser)
+        const parser = new DOMParser();
+        const xmlDoc = parser.parseFromString(xmlData, 'application/xml');
+        const items = xmlDoc.getElementsByTagName('item');
+
+        // Log the number of posts to ensure we're getting data
+        console.log(`Found ${items.length} posts.`);
+
+        // Get the container for blog posts
+        const blogContainer = document.getElementById('blog-posts');
+        blogContainer.innerHTML = ''; // Clear any existing content
+
+        // Loop through the RSS items and display them
+        Array.from(items).forEach(item => {
+            const title = item.querySelector('title').textContent;
+            const link = item.querySelector('link').textContent;
+            const description = item.querySelector('description').textContent;
+
+            // Create the post element
+            const postElement = document.createElement('div');
+            postElement.classList.add('blog-post');
+            
+            postElement.innerHTML = `
+                <h2><a href="${link}" target="_blank">${title}</a></h2>
+                <p>${description}</p>
+                <a href="${link}" target="_blank">Read More</a>
+            `;
+            
+            // Append to the container
+            blogContainer.appendChild(postElement);
+        });
+    } catch (error) {
+        console.error('Error fetching or parsing the RSS feed:', error);
+    }
+}
+
+// Call the function to load posts when the page loads
+window.onload = fetchSubstackPosts;
       
     </script>
 </body>
