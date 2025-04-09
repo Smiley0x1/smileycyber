@@ -154,7 +154,7 @@ a:hover {
 ----------------------------- */
 @media (max-width: 768px) {
   .container {
-    width: 90%;
+    width: 30%;
   }
 
   .header__menu ul {
