@@ -122,39 +122,31 @@ a:hover {
    Blog Styles
 ----------------------------- */
 .blog-wrapper {
-  margin-top: 20px;
+  text-align: center;       /* Center-align the header and content */
+  padding: 40px 0;          /* Adds space around the blog section */
 }
 
+/* Blog Post Styling */
 .blog-post {
-  background-color: #1e1e1e;
-  padding: 20px;
-  border-radius: 10px;
-  margin-bottom: 40px;
+  margin-bottom: 20px;      /* Adds spacing between blog posts */
+  padding: 20px;            /* Adds padding inside each blog post */
+  border: 1px solid #ddd;   /* Light border around each post */
+  border-radius: 8px;       /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds subtle shadow */
 }
 
 .blog-post h2 {
-  font-size: 2.8rem;
-  margin-bottom: 15px;
-}
-
-.meta-info {
-  font-size: 1.4rem;
-  color: #a0a0a0;
+  font-size: 1.5em;
   margin-bottom: 10px;
 }
 
-.tags {
-  font-size: 1.6rem;
-  color: #66b3ff;
+.blog-post a {
+  color: #007BFF;
+  text-decoration: none;
 }
 
-.tags a {
-  margin-right: 10px;
-}
-
-.body-content {
-  font-size: 1.6rem;
-  margin-top: 20px;
+.blog-post a:hover {
+  text-decoration: underline;
 }
 
 /* ----------------------------
