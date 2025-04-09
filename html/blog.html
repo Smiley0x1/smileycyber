@@ -1,119 +1,70 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Blogs - Smiley Cyber</title>
-  <link rel="stylesheet" href="../assets/styles/main.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Smiley Cyber blog and portfolio about cybersecurity, hacking, and programming. Join for tutorials, projects, and fun!">
+    <title>Smiley Cyber - Blog</title>
+    <link rel="stylesheet" href="../assets/styles/main.css">
 </head>
 <body>
-  <header class="header">
-    <nav class="header__menu">
-      <ul>
-        <li><img src="imgs/cropped-original-logo-symbol.png" width="50" height="50" alt="Smiley Cyber Logo"></li>
-        <li><a class="header__menu-link" href="../index.html">Home</a></li>
-        <li><a class="header__menu-link" href="blog.html">Learning</a></li>
-        <li><a class="header__menu-link" href="about.html">About</a></li>
-        <li><a class="header__menu-link" href="contact.html">Contact</a></li>
-      </ul>
-    </nav>
-  </header>
+    <header class="header">
+        <nav class="header__menu">
+            <ul>
+                <li><img src="html/imgs/cropped-original-logo-symbol.png" width="50" height="50" alt="Smiley Cyber Logo"></li>
+                <li><a class="header__menu-link" href="../index.html">Home</a></li>
+                <li><a class="header__menu-link" href="blog.html">Learning</a></li>
+                <li><a class="header__menu-link" href="about.html">About</a></li>
+                <li><a class="header__menu-link" href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
 
-  <main>
-    <section class="intro">
-      <div class="container">
-        <h1>Blog</h1>
-        <p>Explore a collection of research and papers sorted by most recent, with the option to filter by topic.</p>
-      </div>
-    </section>
+    <main>
+        <section class="blog-wrapper">
+            <h1>Latest Blog Posts</h1>
+            <div id="blog-posts">
+                <!-- Blog posts will be dynamically inserted here -->
+            </div>
+        </section>
+    </main>
 
-    <div class="container">
-      <select id="tag-selector" class="dropdown">
-        <option value="">All</option>
-        <option value="cybersecurity">Cybersecurity</option>
-        <option value="hardware">Hardware</option>
-        <option value="networking">Networking</option>
-        <option value="encryption">Encryption</option>
-        <option value="other">Other</option>
-      </select>
+    <script>
+        // Function to fetch and display the Substack RSS feed
+        async function fetchSubstackPosts() {
+            const rssUrl = 'https://logansmylie.substack.com/feed'; // Replace with your Substack RSS feed URL
+            const response = await fetch(rssUrl);
+            const data = await response.text();
 
-      <div id="blog-posts">
-        <!-- Dynamically generated blog posts will appear here -->
-      </div>
-    </div>
-  </main>
+            // Parse the RSS feed (using DOMParser)
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(data, 'application/xml');
+            const items = xmlDoc.getElementsByTagName('item');
 
-  <script>
-    const blogPosts = [
-      {
-        name: "Getting a Shell 0x0",
-        description: "Hacking a router",
-        tags: ["cybersecurity", "other", "hardware"],
-        link: "blogs/Getting_A_Shell0/Getting_A_Shell.html",
-        date: "05/10/2023"
-      },
-      {
-        name: "First Blog Post",
-        description: "Who I am",
-        tags: ["cybersecurity", "other"],
-        link: "blogs/First_Blog/First_Blog.html",
-        date: "3/16/2023"
-      }
-    ];
+            // Get the container for blog posts
+            const blogContainer = document.getElementById('blog-posts');
+            
+            // Loop through the RSS items and display them
+            Array.from(items).forEach(item => {
+                const title = item.querySelector('title').textContent;
+                const link = item.querySelector('link').textContent;
+                const description = item.querySelector('description').textContent;
+                
+                const postElement = document.createElement('div');
+                postElement.classList.add('blog-post');
+                
+                postElement.innerHTML = `
+                    <h2><a href="${link}" target="_blank">${title}</a></h2>
+                    <p>${description}</p>
+                    <a href="${link}" target="_blank">Read More</a>
+                `;
+                
+                blogContainer.appendChild(postElement);
+            });
+        }
 
-    const blogPostsContainer = document.getElementById("blog-posts");
-
-    function createBlogPostElement(post) {
-      const postElement = document.createElement("div");
-      postElement.classList.add("blog-post");
-
-      const nameElement = document.createElement("h2");
-      nameElement.textContent = post.name;
-
-      const dateElement = document.createElement("p");
-      dateElement.classList.add("post-date");
-      dateElement.textContent = post.date;
-
-      const descriptionElement = document.createElement("p");
-      descriptionElement.textContent = post.description;
-
-      const tagsElement = document.createElement("ul");
-      tagsElement.classList.add("tags");
-      post.tags.forEach(tag => {
-        const tagElement = document.createElement("li");
-        tagElement.textContent = tag;
-        tagsElement.appendChild(tagElement);
-      });
-
-      const linkElement = document.createElement("a");
-      linkElement.href = post.link;
-      linkElement.classList.add("read-more-link");
-      linkElement.textContent = "Read More";
-
-      postElement.appendChild(nameElement);
-      postElement.appendChild(dateElement);
-      postElement.appendChild(descriptionElement);
-      postElement.appendChild(tagsElement);
-      postElement.appendChild(linkElement);
-
-      return postElement;
-    }
-
-    function renderBlogPosts() {
-      const selectedTag = document.getElementById("tag-selector").value;
-      blogPostsContainer.innerHTML = "";
-
-      blogPosts
-        .filter(post => selectedTag === "" || post.tags.includes(selectedTag))
-        .forEach(post => {
-          const postElement = createBlogPostElement(post);
-          blogPostsContainer.appendChild(postElement);
-        });
-    }
-
-    document.getElementById("tag-selector").addEventListener("change", renderBlogPosts);
-
-    renderBlogPosts();
-  </script>
+        // Call the function to load posts when the page loads
+        window.onload = fetchSubstackPosts;
+    </script>
 </body>
 </html>
