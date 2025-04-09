@@ -32,7 +32,7 @@
     <script>
         // Function to fetch and display the Substack RSS feed
         async function fetchSubstackPosts() {
-            const rssUrl = 'https://api.allorigins.win/raw?url=https://logansmylie.substack.com/feed'; // Use the AllOrigins proxy to fetch the RSS feed
+            const rssUrl = 'https://api.allorigins.win/raw?url=https://logansmylie.substack.com/feed?random=' + new Date().getTime(); // Added random timestamp to avoid caching
 
             try {
                 // Fetch the RSS feed
@@ -61,6 +61,9 @@
                 // Sort posts by publication date (newest first)
                 posts.sort((a, b) => b.pubDate - a.pubDate);
 
+                // Log the posts array to debug
+                console.log(posts);
+
                 // Loop through sorted posts and add them to the page
                 posts.forEach(post => {
                     const postElement = document.createElement('div');
@@ -80,6 +83,7 @@
             }
         }
 
+        // Call the function to load posts when the page loads
         window.onload = fetchSubstackPosts;
     </script>
 </body>
