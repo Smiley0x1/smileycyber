@@ -261,9 +261,13 @@ button:hover {
 
 .contact-container {
   display: flex;
-  justify-content: center;  /* Center the content horizontally */
-  gap: 20%;  /* Apply 20% gap between the two sections */
-  width: 100%;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 30px;
+  padding: 40px 20px;
+  flex-wrap: wrap; /* Ensures responsiveness on mobile */
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .contact-links {
@@ -278,6 +282,12 @@ button:hover {
   display: flex;
   flex-direction: column;
   gap: 20px;
+}
+
+.contact-socials,
+.contact-form {
+  flex: 1 1 300px;
+  max-width: 500px;
 }
 
 .contact-form form label {
