@@ -128,11 +128,15 @@ a:hover {
 
 /* Blog Post Styling */
 .blog-post {
-  margin-bottom: 20px;      /* Adds spacing between blog posts */
-  padding: 20px;            /* Adds padding inside each blog post */
-  border: 1px solid #ddd;   /* Light border around each post */
-  border-radius: 8px;       /* Rounded corners */
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Adds subtle shadow */
+  display: inline-block;
+  padding: 20px;
+  margin: 20px auto;
+  border: 1px solid #444;
+  border-radius: 8px;
+  background-color: #1e1e1e;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+  max-width: 90%;
+  text-align: center;
 }
 
 .blog-post h2 {
@@ -249,14 +253,16 @@ button:hover {
 
 .row {
   display: flex;
+  justify-content: center;  /* Center the content horizontally */
+  gap: 20%;  /* Apply 20% gap between the two sections */
+  width: 100%;
   flex-wrap: wrap; /* Allow wrapping on smaller screens */
-  gap: 20px;
 }
 
 .contact-container {
   display: flex;
-  justify-content: space-between;
-  gap: 40px;
+  justify-content: center;  /* Center the content horizontally */
+  gap: 20%;  /* Apply 20% gap between the two sections */
   width: 100%;
 }
 
