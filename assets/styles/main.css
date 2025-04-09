@@ -145,7 +145,7 @@ a:hover {
     font-size: 1.4rem;
   }
 }
-.about-img {
+about-img {
     width: 50px;
     height: auto;
     max-width: 100px; /* Restrict the maximum size of the image */
