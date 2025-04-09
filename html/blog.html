@@ -31,8 +31,8 @@
 
     <script>// Function to fetch and display the Substack RSS feed
       async function fetchSubstackPosts() {
-    const rssUrl = 'https://api.allorigins.win/get?url=' + encodeURIComponent('https://logansmylie.substack.com/feed');
-    try {
+        const rssUrl = 'https://rss2json.com/api.json?rss_url=https://logansmylie.substack.com/feed';
+        try {
         const response = await fetch(rssUrl);
         const data = await response.json(); // AllOrigins returns the data in a JSON object
         const xmlData = data.contents; // Access the raw XML content
