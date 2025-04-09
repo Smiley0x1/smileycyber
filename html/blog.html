@@ -33,36 +33,50 @@
         // Function to fetch and display the Substack RSS feed
         async function fetchSubstackPosts() {
             const rssUrl = 'https://api.allorigins.win/raw?url=https://logansmylie.substack.com/feed'; // Use the AllOrigins proxy to fetch the RSS feed
-            try {
-                const response = await fetch(rssUrl);
-                const data = await response.json();
 
-                // Parse the feed and sort posts by the publication date (newest first)
-                const posts = data.items.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
+            try {
+                // Fetch the RSS feed
+                const response = await fetch(rssUrl);
+                const data = await response.text(); // Get the response as raw text (XML format)
+
+                // Parse the XML response
+                const parser = new DOMParser();
+                const xmlDoc = parser.parseFromString(data, "application/xml");
+                const items = xmlDoc.getElementsByTagName("item"); // Get all "item" elements (individual blog posts)
 
                 // Get the container for blog posts
                 const blogContainer = document.getElementById('blog-posts');
-                blogContainer.innerHTML = ''; // Clear the container before adding posts
+                blogContainer.innerHTML = ''; // Clear the container before adding new posts
 
-                // Loop through the sorted posts and display them
+                // Loop through the items and display them
+                const posts = Array.from(items).map(item => {
+                    const title = item.querySelector("title").textContent;
+                    const link = item.querySelector("link").textContent;
+                    const description = item.querySelector("description").textContent;
+                    const pubDate = new Date(item.querySelector("pubDate").textContent);
+
+                    return { title, link, description, pubDate };
+                });
+
+                // Sort posts by publication date (newest first)
+                posts.sort((a, b) => b.pubDate - a.pubDate);
+
+                // Loop through sorted posts and add them to the page
                 posts.forEach(post => {
-                    const title = post.title;
-                    const link = post.link;
-                    const description = post.description;
-
                     const postElement = document.createElement('div');
                     postElement.classList.add('blog-post');
-                    
+
                     postElement.innerHTML = `
-                        <h2><a href="${link}" target="_blank">${title}</a></h2>
-                        <p>${description}</p>
-                        <a href="${link}" target="_blank">Read More</a>
+                        <h2><a href="${post.link}" target="_blank">${post.title}</a></h2>
+                        <p>${post.description}</p>
+                        <a href="${post.link}" target="_blank">Read More</a>
                     `;
-                    
+
                     blogContainer.appendChild(postElement);
                 });
+
             } catch (error) {
-                console.error('Error fetching or parsing the RSS feed:', error);
+                console.error("Error fetching or parsing the RSS feed:", error);
             }
         }
 
