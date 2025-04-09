@@ -179,6 +179,12 @@ a:hover {
   .body-content {
     font-size: 1.4rem;
   }
+
+  /* Stack contact section elements vertically on smaller screens */
+  .contact-container {
+    flex-direction: column;
+    align-items: center;
+  }
 }
 
 @media (max-width: 600px) {
@@ -192,7 +198,6 @@ a:hover {
     max-width: 100px;
   }
 }
-
 
 form {
   display: flex;
@@ -244,11 +249,64 @@ button:hover {
 
 .row {
   display: flex;
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+  gap: 20px;
 }
 
-/* Create two equal columns that sits next to each other */
-.column {
-  flex: 50%;
+.contact-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+  width: 100%;
+}
+
+.contact-links {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.contact-form {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.contact-form form label {
+  margin-bottom: 10px;
+}
+
+.contact-form form input, 
+.contact-form form textarea, 
+.contact-form form button {
   padding: 10px;
-  height: 300px; /* Should be removed. Only for demonstration */
+  font-size: 1.6rem;
+}
+
+.contact-form form button {
+  background-color: #007BFF;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.contact-form form button:hover {
+  background-color: #0056b3;
+}
+
+/* Adjust the layout on smaller screens */
+@media (max-width: 768px) {
+  .contact-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .contact-links,
+  .contact-form {
+    flex: unset;
+    width: 100%;
+    margin-bottom: 20px;
+  }
 }
