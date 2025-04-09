@@ -241,3 +241,11 @@ button:hover {
   align-items: center;
   text-align: center;
 }
+
+.column {
+  flex: 50%;
+}
+
+.row:after{
+  display: 50%;
+}
