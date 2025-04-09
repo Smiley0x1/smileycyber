@@ -111,7 +111,7 @@ a:hover {
 ----------------------------- */
 .about-img {
   display: block;
-  max-width: 60px; /* smaller image */
+  max-width: 600px; /* smaller image */
   width: 100%;
   height: auto;
   margin: 0 auto;
