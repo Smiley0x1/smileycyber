@@ -57,13 +57,15 @@ a:hover {
   left: 0;
   z-index: 100;
 }
-
-.header__menu ul {
-  display: flex;
-  justify-content: space-around;
-  list-style: none;
-  padding: 0;
-}
+  .header__menu ul {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    list-style: none;
+    padding: 0;
+    flex-wrap: wrap;
+  }
+  
 
 .header__menu-link {
   color: #fff;
