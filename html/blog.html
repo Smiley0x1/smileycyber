@@ -4,23 +4,40 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Smiley Cyber blog and portfolio about cybersecurity, hacking, and programming. Join for tutorials, projects, and fun!">
+    <!-- Open Graph -->
+    <meta property="og:title" content="Smiley Cyber - Blog">
+    <meta property="og:description" content="Latest posts on cybersecurity, writeups, and projects.">
+    <meta property="og:image" content="https://www.smileycyber.com/html/imgs/cropped-original-logo-symbol.png">
+    <meta name="twitter:card" content="summary_large_image">
     <title>Smiley Cyber - Blog</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../assets/styles/main.css">
+    <link rel="icon" href="../html/imgs/cropped-original-logo-symbol.png">
+    <link rel="apple-touch-icon" href="../html/imgs/cropped-original-logo-symbol.png">
 </head>
 <body>
+    <a class="skip-link" href="#main">Skip to main content</a>
     <header class="header">
-        <nav class="header__menu">
-            <ul>
-                <li><img src="imgs/cropped-original-logo-symbol.png" width="50" height="50" alt="Smiley Cyber Logo"></li>
-                <li><a class="header__menu-link" href="../index.html">Home</a></li>
-                <li><a class="header__menu-link" href="blog.html">Learning</a></li>
-                <li><a class="header__menu-link" href="about.html">About</a></li>
-                <li><a class="header__menu-link" href="contact.html">Contact</a></li>
-            </ul>
+        <nav class="header__menu" aria-label="Main navigation">
+                <div class="header__brand">
+                    <a href="../index.html"><img src="imgs/cropped-original-logo-symbol.png" width="50" height="50" alt="Smiley Cyber Logo"></a>
+                </div>
+                <ul>
+                    <li><a class="header__menu-link" href="../index.html">Home</a></li>
+                    <li><a class="header__menu-link" href="blog.html">Blog</a></li>
+                    <li><a class="header__menu-link" href="about.html">About</a></li>
+                    <li><a class="header__menu-link" href="contact.html">Contact</a></li>
+                </ul>
+                <div class="header__controls">
+                    <button class="nav-toggle" aria-expanded="false" aria-label="Toggle navigation">☰</button>
+                    <button class="theme-toggle" aria-pressed="false" title="Toggle theme">🌓</button>
+                </div>
         </nav>
     </header>
 
-    <main>
+    <main id="main">
         <section class="blog-wrapper">
             <h1>Latest Blog Posts</h1>
             <div id="blog-posts">
@@ -28,66 +45,108 @@
             </div>
         </section>
     </main>
-
     <script>
-        // Function to fetch and display the Substack RSS feed
+        // Function to fetch and display the Substack RSS feed (safer DOM construction)
         async function fetchSubstackPosts() {
-            const rssUrl = 'https://api.allorigins.win/raw?url=https://logansmylie.substack.com/feed?random=' + new Date().getTime(); // Added random timestamp to avoid caching
+            const rssUrl = 'https://api.allorigins.win/raw?url=https://logansmylie.substack.com/feed?random=' + new Date().getTime();
 
             try {
-                // Fetch the RSS feed
                 const response = await fetch(rssUrl);
-                const data = await response.text(); // Get the response as raw text (XML format)
+                const data = await response.text();
 
-                // Parse the XML response
                 const parser = new DOMParser();
                 const xmlDoc = parser.parseFromString(data, "application/xml");
-                const items = xmlDoc.getElementsByTagName("item"); // Get all "item" elements (individual blog posts)
+                const items = xmlDoc.getElementsByTagName("item");
 
-                // Get the container for blog posts
                 const blogContainer = document.getElementById('blog-posts');
-                blogContainer.innerHTML = ''; // Clear the container before adding new posts
+                blogContainer.innerHTML = '';
 
-                // Loop through the items and display them
                 const posts = Array.from(items).map(item => {
-                    const title = item.querySelector("title").textContent;
-                    const link = item.querySelector("link").textContent;
-                    const description = item.querySelector("description").textContent;
-                    const pubDate = new Date(item.querySelector("pubDate").textContent);
-
-                    return { title, link, description, pubDate };
+                    const title = item.querySelector("title")?.textContent || '';
+                    const link = item.querySelector("link")?.textContent || '#';
+                    const description = item.querySelector("description")?.textContent || '';
+                    const pubDateRaw = item.querySelector("pubDate")?.textContent || '';
+                    const pubDate = pubDateRaw ? new Date(pubDateRaw) : null;
+                    // try common thumbnail/enclosure tags
+                    let thumb = '';
+                    const media = item.getElementsByTagName('media:content')[0] || item.getElementsByTagName('media:thumbnail')[0];
+                    if (media && media.getAttribute) thumb = media.getAttribute('url') || '';
+                    const enclosure = item.getElementsByTagName('enclosure')[0];
+                    if (!thumb && enclosure && enclosure.getAttribute) thumb = enclosure.getAttribute('url') || '';
+                    return { title, link, description, pubDate, pubDateRaw, thumb };
                 });
 
-                // Sort posts by publication date (newest first)
-                posts.sort((a, b) => b.pubDate - a.pubDate);
+                posts.sort((a, b) => (b.pubDate || 0) - (a.pubDate || 0));
 
-                // Log the posts array to debug
-                console.log(posts);
-
-                // Loop through sorted posts and add them to the page
                 posts.forEach(post => {
-                    const postElement = document.createElement('div');
-                    postElement.classList.add('blog-post');
+                    const postElement = document.createElement('article');
+                    postElement.className = 'blog-post';
 
-                    postElement.innerHTML = `
-                        <h1><a href="${post.link}" target="_blank">${post.title}</a></h1>
-                        <p>${post.description}</p><br>
-                        <a href="${post.link}" target="_blank">Read More</a><br>
+                    if (post.thumb) {
+                        const img = document.createElement('img');
+                        img.src = post.thumb;
+                        img.alt = post.title + ' thumbnail';
+                        img.loading = 'lazy';
+                        postElement.appendChild(img);
+                    }
 
-                        <p3>${post.pubDate}</p3><br><br>
+                    const content = document.createElement('div');
 
-                    `;
+                    const h2 = document.createElement('h2');
+                    const a = document.createElement('a');
+                    a.href = post.link;
+                    a.target = '_blank';
+                    a.rel = 'noopener noreferrer';
+                    a.textContent = post.title;
+                    h2.appendChild(a);
+                    content.appendChild(h2);
 
+                    const p = document.createElement('p');
+                    // show a short excerpt (strip tags)
+                    const tmp = document.createElement('div');
+                    tmp.innerHTML = post.description || '';
+                    const text = tmp.textContent || tmp.innerText || '';
+                    p.textContent = text.length > 220 ? text.slice(0,220).trim() + '…' : text;
+                    content.appendChild(p);
+
+                    const readMore = document.createElement('p');
+                    const readLink = document.createElement('a');
+                    readLink.href = post.link;
+                    readLink.target = '_blank';
+                    readLink.rel = 'noopener noreferrer';
+                    readLink.textContent = 'Read More';
+                    readMore.appendChild(readLink);
+                    content.appendChild(readMore);
+
+                    const timeEl = document.createElement('time');
+                    if (post.pubDate) {
+                        timeEl.dateTime = post.pubDate.toISOString();
+                        timeEl.textContent = new Intl.DateTimeFormat(undefined, { dateStyle: 'medium' }).format(post.pubDate);
+                    } else {
+                        timeEl.textContent = post.pubDateRaw || '';
+                    }
+                    const meta = document.createElement('div');
+                    meta.className = 'blog-meta';
+                    meta.appendChild(timeEl);
+                    content.appendChild(meta);
+
+                    postElement.appendChild(content);
                     blogContainer.appendChild(postElement);
                 });
 
             } catch (error) {
                 console.error("Error fetching or parsing the RSS feed:", error);
             }
+
         }
 
-        // Call the function to load posts when the page loads
         window.onload = fetchSubstackPosts;
     </script>
+    <footer class="site-footer">
+      <div class="container">
+        <p>&copy; 2025 Smiley Cyber · <a href="contact.html">Contact</a></p>
+      </div>
+    </footer>
+    <script src="../assets/js/main.js"></script>
 </body>
 </html>

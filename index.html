@@ -4,28 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Smiley Cyber blog and portfolio about cybersecurity, hacking, and programming. Join for tutorials, projects, and fun!">
+    <!-- Open Graph / Twitter -->
+    <meta property="og:title" content="Smiley Cyber">
+    <meta property="og:description" content="Cybersecurity blog and portfolio — tutorials, projects, and writeups.">
+    <meta property="og:image" content="https://www.smileycyber.com/html/imgs/cropped-original-logo-symbol.png">
+    <meta name="twitter:card" content="summary_large_image">
     <title>Smiley Cyber</title>
+    <link rel="icon" href="html/imgs/cropped-original-logo-symbol.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./assets/styles/main.css">
 </head>
 <body>
+    <a class="skip-link" href="#main">Skip to main content</a>
     <header class="header">
-        <nav class="header__menu">
-            <ul>
-                <li><img src="html/imgs/cropped-original-logo-symbol.png" width="50" height="50" alt="Smiley Cyber Logo"></li>
-                <li><a class="header__menu-link" href="#">Home</a></li>
-                <li><a class="header__menu-link" href="html/blog.html">Learning</a></li>
-                <li><a class="header__menu-link" href="html/about.html">About</a></li>
-                <li><a class="header__menu-link" href="html/contact.html">Contact</a></li>
-            </ul>
+        <nav class="header__menu" aria-label="Main navigation">
+                <div class="header__brand">
+                    <a href="./index.html"><img src="html/imgs/cropped-original-logo-symbol.png" width="50" height="50" alt="Smiley Cyber Logo"></a>
+                </div>
+                <ul>
+                    <li><a class="header__menu-link" href="./index.html">Home</a></li>
+                    <li><a class="header__menu-link" href="html/blog.html">Blog</a></li>
+                    <li><a class="header__menu-link" href="html/about.html">About</a></li>
+                    <li><a class="header__menu-link" href="html/contact.html">Contact</a></li>
+                </ul>
+                <div class="header__controls">
+                    <button class="nav-toggle" aria-expanded="false" aria-label="Toggle navigation">☰</button>
+                    <button class="theme-toggle" aria-pressed="false" title="Toggle theme">🌓</button>
+                </div>
         </nav>
     </header>
 
     <main>
+        <!-- Landmark for skip link -->
+        <div id="main"></div>
         <section id="HelloWorld" class="HelloWorld">
-            <h1>Hello World TEST</h1>
+            <h1>Hello World</h1>
             <div class="texto1">
                 <p>Welcome to my portfolio / blog about all things cybersecurity, hacking, and programming.</p>
             </div>
@@ -42,5 +57,11 @@
             </div>
         </section>
     </main>    
+        <footer class="site-footer">
+            <div class="container">
+                <p>&copy; 2025 Smiley Cyber — <a href="html/contact.html">Contact</a> · <a href="html/blog.html">Blog</a></p>
+            </div>
+        </footer>
+        <script src="./assets/js/main.js"></script>
 </body>
 </html>

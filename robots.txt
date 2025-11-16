@@ -1,0 +1,6 @@
+User-agent: *
+Disallow:
+
+# Public sitemap
+Sitemap: https://www.smileycyber.com/sitemap.xml
+Host: www.smileycyber.com

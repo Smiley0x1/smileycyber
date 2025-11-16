@@ -3,33 +3,51 @@
 <head>
   <meta charset="UTF-8">
   <title>About Me - Smiley Cyber</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../assets/styles/main.css">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link rel="icon" href="../html/imgs/cropped-original-logo-symbol.png">
+  <link rel="apple-touch-icon" href="../html/imgs/cropped-original-logo-symbol.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to main content</a>
   <header class="header">
-    <nav class="header__menu">
+    <nav class="header__menu" aria-label="Main navigation">
+      <div class="header__brand">
+        <a href="../index.html"><img src="imgs/cropped-original-logo-symbol.png" width="50" height="50" alt="Smiley Cyber Logo"></a>
+      </div>
       <ul>
-        <li><img src="imgs/cropped-original-logo-symbol.png" width="50" height="50" alt="Smiley Cyber Logo"></li>
         <li><a class="header__menu-link" href="../index.html">Home</a></li>
-        <li><a class="header__menu-link" href="blog.html">Learning</a></li>
+        <li><a class="header__menu-link" href="blog.html">Blog</a></li>
         <li><a class="header__menu-link" href="about.html">About</a></li>
         <li><a class="header__menu-link" href="contact.html">Contact</a></li>
       </ul>
+      <div class="header__controls">
+        <button class="nav-toggle" aria-expanded="false" aria-label="Toggle navigation">☰</button>
+        <button class="theme-toggle" aria-pressed="false" title="Toggle theme">🌓</button>
+      </div>
     </nav>
   </header>
 
-  <main>
+  <main id="main">
     <section class="intro">
       <div class="container">
         <h1>About Me</h1>
         <div class="about-content">
-          <img src="imgs/Logan-16.jpg" alt="Logan Smylie" class="about-img">
+          <img src="imgs/Logan-16.jpg" alt="Logan Smylie" class="about-img" loading="lazy">
           <p>Hi, my name is Smiley.<br> I am a Security Researcher specializing in reverse engineering, pentesting, and maldev. I recently graduated with a bachelor's degree in Cybersecurity, and while I am looking for a job, I will be creating writeups on the aforementioned subjects.<br><br>
-          I am currently working on starting this blog and a <a href="https://www.youtube.com/@SmileyCyber" target="_blank" class="youtube-link">YouTube channel</a>.</p>
+          I am currently working on starting this blog and a <a href="https://www.youtube.com/@SmileyCyber" target="_blank" rel="noopener noreferrer" class="youtube-link">YouTube channel</a>.</p>
         </div>
       </div>
     </section>
   </main>
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2025 Smiley Cyber · <a href="../html/contact.html">Contact</a></p>
+    </div>
+  </footer>
+  <script src="../assets/js/main.js"></script>
 </body>
 </html>

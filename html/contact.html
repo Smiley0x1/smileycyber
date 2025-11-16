@@ -4,36 +4,49 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Smiley Cyber</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../assets/styles/main.css">
+  <link rel="icon" href="../html/imgs/cropped-original-logo-symbol.png">
+  <link rel="apple-touch-icon" href="../html/imgs/cropped-original-logo-symbol.png">
 </head>
 <body>
+  <a class="skip-link" href="#main">Skip to main content</a>
   <header class="header">
-    <nav class="header__menu">
+    <nav class="header__menu" aria-label="Main navigation">
+      <div class="header__brand">
+        <a href="../index.html"><img src="imgs/cropped-original-logo-symbol.png" width="50" height="50" alt="Smiley Cyber Logo"></a>
+      </div>
       <ul>
-        <li><img src="imgs/cropped-original-logo-symbol.png" width="50" height="50" alt="Smiley Cyber Logo"></li>
         <li><a class="header__menu-link" href="../index.html">Home</a></li>
-        <li><a class="header__menu-link" href="blog.html">Learning</a></li>
+        <li><a class="header__menu-link" href="blog.html">Blog</a></li>
         <li><a class="header__menu-link" href="about.html">About</a></li>
         <li><a class="header__menu-link" href="contact.html">Contact</a></li>
       </ul>
+      <div class="header__controls">
+        <button class="nav-toggle" aria-expanded="false" aria-label="Toggle navigation">☰</button>
+        <button class="theme-toggle" aria-pressed="false" title="Toggle theme">🌓</button>
+      </div>
     </nav>
   </header>
 
-  <section class="contact-section">
-    <div class="contact-container">
+  <main id="main">
+    <section class="contact-section">
+      <div class="contact-container">
       <div class="contact-socials">
         <h2>Find Us on Social Media</h2>
-        <a href="https://twitter.com/LoganSmylie" target="_blank">
-          <img src="imgs/twitter-icon.png" alt="Twitter" height="50px"> LoganSmylie @ Twitter
+        <a href="https://twitter.com/LoganSmylie" target="_blank" rel="noopener noreferrer">
+          <img src="imgs/twitter-icon.png" alt="Twitter" height="50" loading="lazy"> LoganSmylie @ Twitter
         </a><br>
-        <a href="https://www.linkedin.com/in/logan-smylie-4527051ab/" target="_blank">
-          <img src="imgs/ln-logo.png" alt="LinkedIn" height="50px"> Logan Smylie @ LinkedIn
+        <a href="https://www.linkedin.com/in/logan-smylie-4527051ab/" target="_blank" rel="noopener noreferrer">
+          <img src="imgs/ln-logo.png" alt="LinkedIn" height="50" loading="lazy"> Logan Smylie @ LinkedIn
         </a><br>
-        <a href="https://github.com/smiley0x1" target="_blank">
-          <img src="imgs/github-mark.png" alt="GitHub" height="50px"> Smiley0x1 @ GitHub
+        <a href="https://github.com/smiley0x1" target="_blank" rel="noopener noreferrer">
+          <img src="imgs/github-mark.png" alt="GitHub" height="50" loading="lazy"> Smiley0x1 @ GitHub
         </a><br>
-        <a href="mailto:smylielogan@gmail.com" target="_blank">
-          <img src="imgs/email.png" alt="Email" height="50px"> SmylieLogan@gmail[.]com
+        <a href="mailto:smylielogan@gmail.com" target="_blank" rel="noopener noreferrer">
+          <img src="imgs/email.png" alt="Email" height="50" loading="lazy"> SmylieLogan@gmail[.]com
         </a><br>
       </div>
 
@@ -59,6 +72,13 @@
         </form>
       </div>
     </div>
-  </section>
+    </section>
+  </main>
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2025 Smiley Cyber · <a href="about.html">About</a></p>
+    </div>
+  </footer>
+  <script src="../assets/js/main.js"></script>
 </body>
 </html>
