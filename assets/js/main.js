@@ -82,5 +82,31 @@
       // ignore
       console.warn('Active nav: ', err);
     }
+
+    // Ensure body has enough top padding so fixed header doesn't cover content.
+    // Compute from the rendered header height (handles font-size, wrapped controls, and responsive changes).
+    function updateBodyOffset() {
+      try {
+        const header = document.querySelector('.header');
+        if (!header) return;
+        const h = header.getBoundingClientRect().height;
+        // Add a small gap (12px) so content isn't flush against the header.
+        document.body.style.paddingTop = Math.ceil(h + 12) + 'px';
+      } catch (e) {
+        // noop
+      }
+    }
+
+    // Debounced resize handler
+    let _rAF;
+    function onResize() {
+      if (_rAF) cancelAnimationFrame(_rAF);
+      _rAF = requestAnimationFrame(() => updateBodyOffset());
+    }
+
+    // Run on load and resize; also after a short timeout to catch late layout changes
+    updateBodyOffset();
+    window.addEventListener('resize', onResize);
+    window.addEventListener('load', () => setTimeout(updateBodyOffset, 50));
   });
 })();
