@@ -27,9 +27,18 @@ html {
   --text: #e0e0e0;
   --accent: #66b3ff;
   --max-content-width: 1200px;
-  --container-padding: 20px;
+  --container-padding: clamp(1rem, 2.5vw, 2.4rem);
   --header-height: 5.6rem; /* 56px - slightly more compact */
   --nav-font-size: 1.6rem;
+  /* Spacing scale */
+  --space-1: 0.6rem;
+  --space-2: 1.2rem;
+  --space-3: 2.4rem;
+  --space-4: 3.6rem;
+  /* Type scale (fluid) */
+  --type-body: clamp(1.4rem, 1.6vw, 1.8rem);
+  --type-lg: clamp(1.8rem, 2.4vw, 2.4rem);
+  --type-xl: clamp(2.4rem, 4vw, 4.2rem);
 }
 
 [data-theme="light"] {
@@ -47,7 +56,13 @@ body {
   line-height: 1.6;
   margin: 0;
   padding-top: calc(var(--header-height) + 1.2rem); /* Prevent content from hiding under fixed header */
+  font-size: var(--type-body);
 }
+
+/* Make footer stick to bottom when content is short */
+html, body { height: 100%; }
+body { display: flex; flex-direction: column; }
+main { flex: 1 0 auto; }
 
 /* Skip link (accessible "Skip to main content") */
 .skip-link {
@@ -73,9 +88,11 @@ body {
 /* Typography */
 h1,
 h2 {
-  font-size: 3rem;
-  margin-bottom: 20px;
+  margin-bottom: var(--space-2);
 }
+
+h1 { font-size: var(--type-xl); }
+h2 { font-size: var(--type-lg); }
 
 p {
   font-size: 1.6rem;
@@ -93,10 +110,11 @@ a:hover {
 
 /* Container */
 .container {
-  width: 80%;
+  width: 100%;
   max-width: var(--max-content-width);
-  margin: 0 auto;
-  padding: var(--container-padding);
+  margin-inline: auto;
+  padding-inline: var(--container-padding);
+  padding-block: var(--space-3);
 }
 
 
@@ -256,9 +274,9 @@ body, .site-footer, .blog-post, .header {
 
 .texto1 p,
 .texto p {
-  max-width: 700px;
+  max-width: 65ch;
   margin: 0 auto;
-  font-size: 1.6rem;
+  font-size: var(--type-body);
 }
 
 /* ----------------------------
@@ -273,12 +291,68 @@ body, .site-footer, .blog-post, .header {
   border-radius: 10px; /* optional: looks cleaner */
 }
 
+/* About page layout improvements */
+.about-grid {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: var(--space-3);
+  align-items: start;
+}
+.about-media { text-align: center }
+.about-bio { color: var(--text); }
+.about-bio .lead { font-size: var(--type-lg); color: var(--muted); margin-bottom: var(--space-2) }
+.what-list { list-style: disc; margin-left: 1.2rem; }
+.skills { display:flex; gap:.6rem; flex-wrap:wrap; margin-top:.6rem }
+.skills span { background: rgba(255,255,255,0.04); padding:.4rem .6rem; border-radius:6px; font-weight:600; font-size:1.4rem }
+.socials { display:flex; gap:.6rem; justify-content:center; margin-top:var(--space-2) }
+.about-media .button { display:inline-block }
+
+@media (max-width: 768px) {
+  .about-grid { grid-template-columns: 1fr; text-align: center }
+  .about-bio { text-align: left }
+  .about-media { order: -1 }
+}
+
 /* ----------------------------
    Blog Styles
 ----------------------------- */
 .blog-wrapper {
   text-align: center;       /* Center-align the header and content */
   padding: 40px 0;          /* Adds space around the blog section */
+}
+
+/* Blog layout: main + sidebar for recent posts */
+.blog-layout {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: var(--space-3);
+  align-items: start;
+}
+.blog-main { min-width: 0 }
+.recent-posts { background: transparent; padding: var(--space-2); border-radius: 8px }
+.recent-posts h2 { margin-top: 0 }
+.recent-posts a { color: var(--accent); font-weight:600 }
+
+/* Recent posts sidebar cards */
+.recent-post-card { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1.2rem; padding-bottom: 1.2rem; border-bottom: 1px solid rgba(255,255,255,0.02) }
+.recent-post-card:last-child { border-bottom: none; padding-bottom: 0 }
+.recent-post-thumb { width: 100%; height: 140px; object-fit: cover; border-radius: 6px }
+.recent-post-content h3 { margin: 0; font-size: 1.4rem }
+.recent-post-excerpt { margin: 0.4rem 0 0 0; font-size: 1.3rem; color: var(--muted); line-height: 1.4 }
+
+@media (max-width: 900px) {
+  .blog-layout { grid-template-columns: 1fr; }
+  .recent-posts { order: -1 }
+}
+
+/* Responsive blog grid for indexes and archives */
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: clamp(1rem, 2.5vw, 1.6rem);
+  max-width: var(--max-content-width);
+  margin: 0 auto;
+  padding: var(--container-padding);
 }
 
 /* Blog Post Styling (card with optional thumbnail) */
@@ -317,12 +391,80 @@ body, .site-footer, .blog-post, .header {
 .blog-meta { font-size: 1.4rem; color: var(--muted); margin-top: 0.6rem }
 
 /* ----------------------------
+   Hero
+----------------------------- */
+.hero {
+  background: linear-gradient(180deg, rgba(0,0,0,0.02), transparent);
+  padding-block: var(--space-4);
+}
+.hero__inner {
+  display: grid;
+  grid-template-columns: 1fr 220px;
+  gap: var(--space-3);
+  align-items: center;
+}
+.hero__content { text-align: left; }
+.hero .lead { color: var(--muted); margin-bottom: var(--space-2); font-size: var(--type-lg); }
+.hero__media img { border-radius: 12px; display: block; margin-inline: auto }
+
+/* Buttons used in hero */
+.button {
+  display: inline-block;
+  padding: 0.8rem 1.2rem;
+  border-radius: 8px;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+  margin-right: 0.6rem;
+}
+.button--ghost { background: transparent; color: var(--text); border: 1px solid rgba(255,255,255,0.06); }
+
+/* ----------------------------
+   Cookie Banner (bottom)
+----------------------------- */
+.cookie-banner {
+  position: fixed;
+  left: 1rem;
+  right: 1rem;
+  bottom: 1rem;
+  z-index: 1200;
+  background: var(--surface);
+  color: var(--text);
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.35);
+}
+.cookie-banner .cookie-inner {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+}
+.cookie-banner p { margin: 0; color: var(--muted); }
+.cookie-banner .cookie-accept,
+.cookie-banner .cookie-decline {
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+.cookie-banner .cookie-accept { background: var(--accent); color: #fff; font-weight:700 }
+.cookie-banner .cookie-decline { background: transparent; color: var(--muted); border: 1px solid rgba(255,255,255,0.04) }
+
+
+/* ----------------------------
    Responsive Design
 ----------------------------- */
 @media (max-width: 768px) {
+  :root { --header-height: 4.8rem; }
   .container {
     width: 90%;
   }
+
+  .hero__inner { grid-template-columns: 1fr; text-align: center }
+  .hero__content { margin-bottom: var(--space-2) }
+  .hero__media { display: none }
 
   /* Hide the full menu on mobile until toggled */
   .header__menu ul {
@@ -467,7 +609,7 @@ button:hover {
 .row {
   display: flex;
   justify-content: center;  /* Center the content horizontally */
-  gap: 20%;  /* Apply 20% gap between the two sections */
+  gap: clamp(1rem, 4vw, 2.4rem);  /* Apply fluid gap between the two sections */
   width: 100%;
   flex-wrap: wrap; /* Allow wrapping on smaller screens */
 }
@@ -538,4 +680,23 @@ button:hover {
     width: 100%;
     margin-bottom: 20px;
   }
+}
+
+/* New contact page styles */
+.contact-section { padding-block: var(--space-4); }
+.contact-card { background: var(--surface); border-radius: 10px; padding: var(--space-3); }
+.contact-grid { display: grid; grid-template-columns: 320px 1fr; gap: var(--space-3); align-items:start; }
+.contact-grid .panel { background: transparent }
+.contact-info h3 { margin-top: var(--space-1); }
+.contact-list { list-style: none; padding:0; margin:0; color:var(--muted) }
+.contact-list li { margin-bottom: 0.6rem }
+.contact-list i { color: var(--accent); margin-right: 0.4rem; width: 1.2rem }
+.form-label { display:block; margin-bottom: var(--space-2); font-size:1.4rem }
+.form-label input, .form-label textarea, .form-row input[type="file"] { width:100%; padding:0.8rem; border-radius:8px; border:1px solid rgba(255,255,255,0.06); background:transparent; color:var(--text); }
+.form-row { display:flex; gap:var(--space-2); align-items:center }
+
+@media (max-width: 900px) {
+  .contact-grid { grid-template-columns: 1fr; }
+  .contact-info { text-align:center }
+  .form-row { flex-direction: column; align-items: stretch }
 }

@@ -108,5 +108,25 @@
     updateBodyOffset();
     window.addEventListener('resize', onResize);
     window.addEventListener('load', () => setTimeout(updateBodyOffset, 50));
+
+    // COOKIE BANNER: show unless previously accepted/declined
+    try {
+      const cookieBanner = document.querySelector('.cookie-banner');
+      const acceptBtn = cookieBanner && cookieBanner.querySelector('.cookie-accept');
+      const declineBtn = cookieBanner && cookieBanner.querySelector('.cookie-decline');
+      const accepted = localStorage.getItem('cookieAccepted');
+      if (cookieBanner && !accepted) {
+        cookieBanner.removeAttribute('hidden');
+      }
+      function hideCookie(remember) {
+        if (!cookieBanner) return;
+        cookieBanner.setAttribute('hidden', '');
+        if (remember) localStorage.setItem('cookieAccepted', remember);
+      }
+      if (acceptBtn) acceptBtn.addEventListener('click', () => hideCookie('true'));
+      if (declineBtn) declineBtn.addEventListener('click', () => hideCookie('declined'));
+    } catch (e) {
+      // ignore cookie banner errors
+    }
   });
 })();

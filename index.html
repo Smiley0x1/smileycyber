@@ -39,6 +39,22 @@
     <main>
         <!-- Landmark for skip link -->
         <div id="main"></div>
+        <!-- Hero -->
+        <section class="hero">
+            <div class="container hero__inner">
+                <div class="hero__content">
+                    <h1>Welcome to Smiley Cyber</h1>
+                    <p class="lead">Cybersecurity writeups, projects, and tutorials — short, practical, and hands-on.</p>
+                    <p>
+                        <a class="button" href="html/blog.html">Read the blog</a>
+                        <a class="button button--ghost" href="html/about.html">About</a>
+                    </p>
+                </div>
+                <div class="hero__media" aria-hidden="true">
+                    <img src="html/imgs/cropped-original-logo-symbol.png" width="140" height="140" alt="Smiley Cyber logo">
+                </div>
+            </div>
+        </section>
         <section id="HelloWorld" class="HelloWorld">
             <h1>Hello World</h1>
             <div class="texto1">
@@ -54,6 +70,55 @@
                         I will be posting writeups that will accompany videos found on my YouTube. I will also be posting about random projects, things that I learn, and occasional fun posts.
                     </p>
                 </div>
+            </div>
+        </section>
+
+        <section class="blog-wrapper">
+            <div class="container">
+                <h2>Latest posts</h2>
+                <div class="blog-grid">
+                    <!-- Latest posts will be inserted by JS (most recent first) -->
+                </div>
+                <noscript>
+                    <p style="text-align:center;color:var(--muted)">Enable JavaScript to see latest posts here — or visit the <a href="html/blog.html">blog page</a>.</p>
+                </noscript>
+                <script>
+                    (async function () {
+                        const feed = 'https://logansmylie.substack.com/feed';
+                        const proxy = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(feed);
+                        try {
+                            const res = await fetch(proxy);
+                            const text = await res.text();
+                            const parser = new DOMParser();
+                            const xml = parser.parseFromString(text, 'application/xml');
+                            const items = Array.from(xml.getElementsByTagName('item'));
+                            const container = document.querySelector('.blog-grid');
+                            container.innerHTML = '';
+                            const posts = items.map(item => {
+                                const title = item.querySelector('title')?.textContent || '';
+                                const link = item.querySelector('link')?.textContent || '#';
+                                const pub = item.querySelector('pubDate')?.textContent || '';
+                                const pubDate = pub ? new Date(pub) : null;
+                                const desc = item.querySelector('description')?.textContent || '';
+                                return { title, link, pubDate, desc };
+                            }).sort((a,b) => (b.pubDate||0) - (a.pubDate||0));
+                            posts.slice(0,3).forEach(p => {
+                                const art = document.createElement('article');
+                                art.className = 'blog-post';
+                                art.innerHTML = `
+                                    <div>
+                                        <h3><a href="${p.link}" target="_blank" rel="noopener noreferrer">${p.title}</a></h3>
+                                        <p class="blog-meta">${p.pubDate ? new Intl.DateTimeFormat(undefined,{dateStyle:'medium'}).format(p.pubDate) : ''}</p>
+                                    </div>`;
+                                container.appendChild(art);
+                            });
+                        } catch (e) {
+                            console.warn('Could not load latest posts', e);
+                        }
+                    })();
+                </script>
+                </div>
+                <p style="text-align:center; margin-top:1rem"><a href="html/blog.html">View all posts</a></p>
             </div>
         </section>
     </main>    

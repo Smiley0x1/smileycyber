@@ -7,6 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="../assets/styles/main.css">
   <link rel="icon" href="../html/imgs/cropped-original-logo-symbol.png">
   <link rel="apple-touch-icon" href="../html/imgs/cropped-original-logo-symbol.png">
@@ -33,47 +34,91 @@
 
   <main id="main">
     <section class="contact-section">
-      <div class="contact-container">
-      <div class="contact-socials">
-        <h2>Find Us on Social Media</h2>
-        <a href="https://twitter.com/LoganSmylie" target="_blank" rel="noopener noreferrer">
-          <img src="imgs/twitter-icon.png" alt="Twitter" height="50" loading="lazy"> LoganSmylie @ Twitter
-        </a><br>
-        <a href="https://www.linkedin.com/in/logan-smylie-4527051ab/" target="_blank" rel="noopener noreferrer">
-          <img src="imgs/ln-logo.png" alt="LinkedIn" height="50" loading="lazy"> Logan Smylie @ LinkedIn
-        </a><br>
-        <a href="https://github.com/smiley0x1" target="_blank" rel="noopener noreferrer">
-          <img src="imgs/github-mark.png" alt="GitHub" height="50" loading="lazy"> Smiley0x1 @ GitHub
-        </a><br>
-        <a href="mailto:smylielogan@gmail.com" target="_blank" rel="noopener noreferrer">
-          <img src="imgs/email.png" alt="Email" height="50" loading="lazy"> SmylieLogan@gmail[.]com
-        </a><br>
-      </div>
+      <div class="container contact-card">
+        <h1>Contact</h1>
+        <p class="lead" style="margin-bottom:var(--space-2)">Have a question, collaboration or a project idea? Drop me a line — I reply to messages as soon as I can.</p>
+        <div class="contact-grid">
+          <div class="panel contact-info">
+            <img src="imgs/Logan-16.jpg" alt="Logan Smylie" class="about-img" style="max-width:140px;border-radius:8px;">
+            <h3>Logan Smylie</h3>
+            <p style="color:var(--muted)">Security researcher — pentesting, reverse engineering & tooling.</p>
 
-      <div class="contact-form">
-        <h2>Contact Us</h2>
-        <form action="https://formspree.io/f/xpwpkapr" method="POST" enctype="multipart/form-data">
-          <label>
-            Your email:<br>
-            <input type="email" name="email" required>
-          </label>
-          <br><br>
-          <label>
-            Your message:<br>
-            <textarea name="message" required></textarea>
-          </label>
-          <br><br>
-          <label>
-            Your file:<br>
-            <input type="file" name="upload">
-          </label>
-          <br><br>
-          <button type="submit">Send</button>
-        </form>
+            <h4 style="margin-top:var(--space-2)">Reach me</h4>
+            <ul class="contact-list">
+              <li><i class="fas fa-envelope"></i> <a href="mailto:smylielogan@gmail.com">Email</a></li>
+              <li><i class="fab fa-twitter"></i> <a href="https://twitter.com/LoganSmylie" target="_blank" rel="noopener noreferrer">Twitter</a></li>
+              <li><i class="fab fa-github"></i> <a href="https://github.com/smiley0x1" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+            </ul>
+
+            <p style="margin-top:var(--space-2)"><a class="button button--ghost" href="https://logansmylie.substack.com" target="_blank" rel="noopener noreferrer">Visit my Substack</a></p>
+          </div>
+
+          <div class="panel contact-form">
+            <h2>Send a message</h2>
+            <form id="contact-form" action="https://formspree.io/f/xpwpkapr" method="POST" enctype="multipart/form-data">
+              <label class="form-label">
+                Name
+                <input type="text" name="name" placeholder="Your name" required>
+              </label>
+
+              <label class="form-label">
+                Email
+                <input type="email" name="email" placeholder="you@example.com" required>
+              </label>
+
+              <label class="form-label">
+                Subject
+                <input type="text" name="subject" placeholder="Subject (optional)">
+              </label>
+
+              <label class="form-label">
+                Message
+                <textarea name="message" placeholder="Write your message..." rows="6" required></textarea>
+              </label>
+
+              <div class="form-row" style="justify-content:space-between;align-items:center;">
+                <label class="form-label" style="flex:1">
+                  Attachment (optional)
+                  <input type="file" name="upload">
+                </label>
+                <button type="submit" class="button" style="margin-left:var(--space-2)">Send Message</button>
+              </div>
+
+              <div id="contact-success" role="status" aria-live="polite" style="display:none;margin-top:var(--space-2);color:var(--accent);">Thanks — your message was sent.</div>
+            </form>
+          </div>
+        </div>
       </div>
-    </div>
     </section>
   </main>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const form = document.getElementById('contact-form');
+      const successMsg = document.getElementById('contact-success');
+      if (!form) return;
+      form.addEventListener('submit', async function (e) {
+        e.preventDefault();
+        const formData = new FormData(form);
+        const formspreeUrl = form.getAttribute('action');
+        try {
+          const response = await fetch(formspreeUrl, {
+            method: 'POST',
+            body: formData,
+            headers: { 'Accept': 'application/json' }
+          });
+          if (response.ok) {
+            form.reset();
+            successMsg.style.display = 'block';
+            setTimeout(() => { successMsg.style.display = 'none'; }, 5000);
+          } else {
+            console.error('Form submission failed:', response.statusText);
+          }
+        } catch (error) {
+          console.error('Error submitting form:', error);
+        }
+      });
+    });
+  </script>
   <footer class="site-footer">
     <div class="container">
       <p>&copy; 2025 Smiley Cyber · <a href="about.html">About</a></p>

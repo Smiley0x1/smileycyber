@@ -6,6 +6,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="../assets/styles/main.css">
   <link rel="icon" href="../html/imgs/cropped-original-logo-symbol.png">
   <link rel="apple-touch-icon" href="../html/imgs/cropped-original-logo-symbol.png">
@@ -35,10 +36,43 @@
     <section class="intro">
       <div class="container">
         <h1>About Me</h1>
-        <div class="about-content">
-          <img src="imgs/Logan-16.jpg" alt="Logan Smylie" class="about-img" loading="lazy">
-          <p>Hi, my name is Smiley.<br> I am a Security Researcher specializing in reverse engineering, pentesting, and maldev. I recently graduated with a bachelor's degree in Cybersecurity, and while I am looking for a job, I will be creating writeups on the aforementioned subjects.<br><br>
-          I am currently working on starting this blog and a <a href="https://www.youtube.com/@SmileyCyber" target="_blank" rel="noopener noreferrer" class="youtube-link">YouTube channel</a>.</p>
+        <div class="about-grid">
+          <div class="about-media">
+            <img src="imgs/Logan-16.jpg" alt="Logan Smylie" class="about-img" loading="lazy">
+            <div class="socials">
+              <a href="https://www.youtube.com/@SmileyCyber" target="_blank" rel="noopener noreferrer" class="button">YouTube</a>
+              <a href="https://github.com/" target="_blank" rel="noopener noreferrer" class="button button--ghost">GitHub</a>
+            </div>
+          </div>
+          <div class="about-bio">
+            <p class="lead">Hi — I’m Smiley, a Security Researcher focused on reverse engineering, pentesting, and maldev. I create practical writeups and short tutorials that accompany my videos.</p>
+            <p>I recently graduated with a Bachelor's in Cybersecurity and I publish writeups, project notes, and tools I build. I enjoy breaking down complex problems into small, actionable steps.</p>
+
+            <h3>What I do</h3>
+            <ul class="what-list">
+              <li>Web & binary exploitation</li>
+              <li>Reverse engineering & analysis</li>
+              <li>Tooling & automation for security research</li>
+            </ul>
+
+            <h3>Skills</h3>
+            <div class="skills">
+              <span>Python</span>
+              <span>Linux</span>
+              <span>C/C++</span>
+              <span>Assembly</span>
+              <span>Burp</span>
+            </div>
+
+            <h3 style="margin-top:var(--space-2)">Reach me</h3>
+            <ul class="contact-list">
+              <li><i class="fas fa-envelope"></i> <a href="mailto:smylielogan@gmail.com">Email</a></li>
+              <li><i class="fab fa-twitter"></i> <a href="https://twitter.com/LoganSmylie" target="_blank" rel="noopener noreferrer">Twitter</a></li>
+              <li><i class="fab fa-github"></i> <a href="https://github.com/smiley0x1" target="_blank" rel="noopener noreferrer">GitHub</a></li>
+            </ul>
+
+            <p style="margin-top:1.2rem">Want to collaborate or ask a question? <a href="contact.html">Get in touch</a>.</p>
+          </div>
         </div>
       </div>
     </section>

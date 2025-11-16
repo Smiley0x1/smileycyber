@@ -40,34 +40,120 @@
     <main id="main">
         <section class="blog-wrapper">
             <h1>Latest Blog Posts</h1>
-            <div id="blog-posts">
-                <!-- Blog posts will be dynamically inserted here -->
+            <div class="blog-layout container">
+                <div class="blog-main">
+                    <div style="max-width:820px;margin:0 0 var(--space-2) 0">
+                        <form id="blog-search-form" role="search" aria-label="Search blog posts" style="display:flex;gap:.6rem;align-items:center;">
+                            <input id="blog-search" type="search" placeholder="Search posts by title or content…" aria-label="Search posts" style="flex:1;padding:.6rem;border-radius:8px;border:1px solid rgba(255,255,255,0.04)">
+                            <button type="submit" class="button">Search</button>
+                        </form>
+                        <p id="search-info" style="color:var(--muted);font-size:1.4rem;margin-top:.6rem;" aria-live="polite"></p>
+                    </div>
+                    <div id="blog-posts">
+                        <!-- Blog posts will be dynamically inserted here -->
+                    </div>
+                </div>
+                <aside class="recent-posts" aria-labelledby="recent-heading">
+                    <h2 id="recent-heading">Recent posts</h2>
+                    <div id="recent-list">
+                        <!-- Recent posts will be inserted here -->
+                    </div>
+                    <p style="margin-top:var(--space-2)"><a id="substack-home" href="" target="_blank" rel="noopener noreferrer">View on Substack</a></p>
+                </aside>
             </div>
         </section>
     </main>
     <script>
-        // Function to fetch and display the Substack RSS feed (safer DOM construction)
+        // Config: update this to your Substack base if different
+        const SUBSTACK_BASE = 'https://logansmylie.substack.com';
+        let POSTS = []; // cached posts
+
+        function highlightText(text, query) {
+            if (!query) return text;
+            const regex = new RegExp(`(${query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+            return text.replace(regex, '<mark style="background:rgba(102,179,255,0.3);border-radius:2px;">$1</mark>');
+        }
+
+        function renderPosts(list, searchQuery = '') {
+            const blogContainer = document.getElementById('blog-posts');
+            blogContainer.innerHTML = '';
+            const info = document.getElementById('search-info');
+            if (list.length === 0) {
+                blogContainer.innerHTML = '<p style="text-align:center;color:var(--muted);font-size:1.4rem">No posts found.</p>';
+                if (info) info.textContent = 'No results';
+                return;
+            }
+            if (info) info.textContent = list.length + (list.length === 1 ? ' result' : ' results');
+            list.forEach(post => {
+                const postElement = document.createElement('article');
+                postElement.className = 'blog-post';
+
+                if (post.thumb) {
+                    const img = document.createElement('img');
+                    img.src = post.thumb;
+                    img.alt = post.title + ' thumbnail';
+                    img.loading = 'lazy';
+                    postElement.appendChild(img);
+                }
+
+                const content = document.createElement('div');
+
+                    const h2 = document.createElement('h2');
+                    const a = document.createElement('a');
+                    a.href = post.link;
+                    a.target = '_blank';
+                    a.rel = 'noopener noreferrer';
+                    a.innerHTML = highlightText(post.title, searchQuery);
+                    h2.appendChild(a);
+                    content.appendChild(h2);                const p = document.createElement('p');
+                const tmp = document.createElement('div');
+                tmp.innerHTML = post.description || '';
+                const text = tmp.textContent || tmp.innerText || '';
+                p.textContent = text.length > 220 ? text.slice(0,220).trim() + '…' : text;
+                content.appendChild(p);
+
+                const readMore = document.createElement('p');
+                const readLink = document.createElement('a');
+                readLink.href = post.link;
+                readLink.target = '_blank';
+                readLink.rel = 'noopener noreferrer';
+                readLink.textContent = 'Read More';
+                readMore.appendChild(readLink);
+                content.appendChild(readMore);
+
+                const timeEl = document.createElement('time');
+                if (post.pubDate) {
+                    timeEl.dateTime = post.pubDate.toISOString();
+                    timeEl.textContent = new Intl.DateTimeFormat(undefined, { dateStyle: 'medium' }).format(post.pubDate);
+                } else {
+                    timeEl.textContent = post.pubDateRaw || '';
+                }
+                const meta = document.createElement('div');
+                meta.className = 'blog-meta';
+                meta.appendChild(timeEl);
+                content.appendChild(meta);
+
+                postElement.appendChild(content);
+                blogContainer.appendChild(postElement);
+            });
+        }
+
         async function fetchSubstackPosts() {
-            const rssUrl = 'https://api.allorigins.win/raw?url=https://logansmylie.substack.com/feed?random=' + new Date().getTime();
-
+            const rssUrl = SUBSTACK_BASE + '/feed';
+            const proxy = 'https://api.allorigins.win/raw?url=' + encodeURIComponent(rssUrl) + '&_=' + Date.now();
             try {
-                const response = await fetch(rssUrl);
+                const response = await fetch(proxy);
                 const data = await response.text();
-
                 const parser = new DOMParser();
                 const xmlDoc = parser.parseFromString(data, "application/xml");
                 const items = xmlDoc.getElementsByTagName("item");
 
-                const blogContainer = document.getElementById('blog-posts');
-                blogContainer.innerHTML = '';
-
-                const posts = Array.from(items).map(item => {
+                POSTS = Array.from(items).map(item => {
                     const title = item.querySelector("title")?.textContent || '';
                     const link = item.querySelector("link")?.textContent || '#';
                     const description = item.querySelector("description")?.textContent || '';
                     const pubDateRaw = item.querySelector("pubDate")?.textContent || '';
                     const pubDate = pubDateRaw ? new Date(pubDateRaw) : null;
-                    // try common thumbnail/enclosure tags
                     let thumb = '';
                     const media = item.getElementsByTagName('media:content')[0] || item.getElementsByTagName('media:thumbnail')[0];
                     if (media && media.getAttribute) thumb = media.getAttribute('url') || '';
@@ -76,71 +162,65 @@
                     return { title, link, description, pubDate, pubDateRaw, thumb };
                 });
 
-                posts.sort((a, b) => (b.pubDate || 0) - (a.pubDate || 0));
-
-                posts.forEach(post => {
-                    const postElement = document.createElement('article');
-                    postElement.className = 'blog-post';
-
-                    if (post.thumb) {
-                        const img = document.createElement('img');
-                        img.src = post.thumb;
-                        img.alt = post.title + ' thumbnail';
-                        img.loading = 'lazy';
-                        postElement.appendChild(img);
-                    }
-
-                    const content = document.createElement('div');
-
-                    const h2 = document.createElement('h2');
-                    const a = document.createElement('a');
-                    a.href = post.link;
-                    a.target = '_blank';
-                    a.rel = 'noopener noreferrer';
-                    a.textContent = post.title;
-                    h2.appendChild(a);
-                    content.appendChild(h2);
-
-                    const p = document.createElement('p');
-                    // show a short excerpt (strip tags)
-                    const tmp = document.createElement('div');
-                    tmp.innerHTML = post.description || '';
-                    const text = tmp.textContent || tmp.innerText || '';
-                    p.textContent = text.length > 220 ? text.slice(0,220).trim() + '…' : text;
-                    content.appendChild(p);
-
-                    const readMore = document.createElement('p');
-                    const readLink = document.createElement('a');
-                    readLink.href = post.link;
-                    readLink.target = '_blank';
-                    readLink.rel = 'noopener noreferrer';
-                    readLink.textContent = 'Read More';
-                    readMore.appendChild(readLink);
-                    content.appendChild(readMore);
-
-                    const timeEl = document.createElement('time');
-                    if (post.pubDate) {
-                        timeEl.dateTime = post.pubDate.toISOString();
-                        timeEl.textContent = new Intl.DateTimeFormat(undefined, { dateStyle: 'medium' }).format(post.pubDate);
-                    } else {
-                        timeEl.textContent = post.pubDateRaw || '';
-                    }
-                    const meta = document.createElement('div');
-                    meta.className = 'blog-meta';
-                    meta.appendChild(timeEl);
-                    content.appendChild(meta);
-
-                    postElement.appendChild(content);
-                    blogContainer.appendChild(postElement);
-                });
-
+                POSTS.sort((a, b) => (b.pubDate || 0) - (a.pubDate || 0));
+                renderPosts(POSTS);
             } catch (error) {
                 console.error("Error fetching or parsing the RSS feed:", error);
             }
-
         }
 
-        window.onload = fetchSubstackPosts;
+        // Search handling: filter cached POSTS locally. Render recent posts in sidebar and set Substack links.
+        document.addEventListener('DOMContentLoaded', function () {
+            const form = document.getElementById('blog-search-form');
+            const input = document.getElementById('blog-search');
+            const openSubstack = document.getElementById('open-substack');
+            const substackHome = document.getElementById('substack-home');
+
+            function renderRecent(list) {
+                const container = document.getElementById('recent-list');
+                container.innerHTML = '';
+                list.slice(0,3).forEach(p => {
+                    const el = document.createElement('article');
+                    el.className = 'recent-post-card';
+                    const excerpt = (p.description || '').replace(/<[^>]*>/g, '').substring(0, 100).trim() + (p.description && p.description.length > 100 ? '…' : '');
+                    el.innerHTML = `
+                        ${p.thumb ? `<img src="${p.thumb}" alt="${p.title}" class="recent-post-thumb" loading="lazy">` : ''}
+                        <div class="recent-post-content">
+                            <h3><a href="${p.link}" target="_blank" rel="noopener noreferrer">${p.title}</a></h3>
+                            ${excerpt ? `<p class="recent-post-excerpt">${excerpt}</p>` : ''}
+                            <div class="blog-meta">${p.pubDate ? new Intl.DateTimeFormat(undefined,{dateStyle:'medium'}).format(p.pubDate) : ''}</div>
+                        </div>
+                    `;
+                    container.appendChild(el);
+                });
+            }
+
+            form.addEventListener('submit', function (ev) {
+                ev.preventDefault();
+                const q = input.value.trim().toLowerCase();
+                if (!q) {
+                    renderPosts(POSTS, '');
+                    renderRecent(POSTS);
+                    return;
+                }
+                const filtered = POSTS.filter(p => {
+                    const hay = (p.title + ' ' + (p.description || '')).toLowerCase();
+                    return hay.indexOf(q) !== -1;
+                });
+                renderPosts(filtered, input.value.trim());
+                renderRecent(POSTS);
+            });
+
+            // Open Substack home (or search there manually) — user can use Substack UI
+            try {
+                const base = SUBSTACK_BASE.replace(/\/$/, '');
+                if (openSubstack) openSubstack.href = base;
+                if (substackHome) substackHome.href = base;
+            } catch (e) {}
+
+            // initial load
+            fetchSubstackPosts().then(() => { renderPosts(POSTS, ''); renderRecent(POSTS); });
+        });
     </script>
     <footer class="site-footer">
       <div class="container">
